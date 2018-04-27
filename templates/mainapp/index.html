@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dummy App</title>
+</head>
+<body>
+<form id="dummyform" action="." method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button class="submit" type="button">Submit</button>
+</form>
+<script
+  src="http://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script>
+  $('button.submit').on('click', function () {
+      var form = document.getElementById('dummyform');
+      var formdata = new FormData(form);
+      var headers = new Headers();
+      headers.append('X-CSRFTOKEN', formdata.get('csrfmiddlewaretoken'));
+      fetch(window.location.href, {method: 'POST', body: formdata, headers: headers})
+          .then(function (value) { alert('ok') });
+
+  });
+</script>
+
+</body>
+</html>
